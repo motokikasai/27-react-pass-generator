@@ -12,7 +12,7 @@ export default class passGenerator extends Component {
     };
 
     this.HandleSubmit = this.HandleSubmit.bind(this);
-    this.HandleCharLength = this.HandleCharLength.bind(this);
+    this.HandledWordLength = this.HandledWordLength.bind(this);
     this.HandleCheckboxes = this.HandleCheckboxes.bind(this);
   }
 
@@ -63,7 +63,7 @@ export default class passGenerator extends Component {
     });
   }
 
-  HandleCharLength(e) {
+  HandledWordLength(e) {
     this.setState({
       lengthInput: e.target.value,
     });
@@ -74,7 +74,7 @@ export default class passGenerator extends Component {
       [e.target.name]: !this.state[e.target.name],
     });
 
-    console.log(this.state[e.target.name]);
+    // console.log(this.state[e.target.name]);
   }
 
   render() {
@@ -91,7 +91,7 @@ export default class passGenerator extends Component {
             <div className="subheader">Settings</div>
             <label htmlFor="pass-length">Password length</label>
             <input
-              onChange={this.HandleCharLength}
+              onChange={this.HandledWordLength}
               type="number"
               name="number"
               id="pass-length"
