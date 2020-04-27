@@ -1,0 +1,50 @@
+.container {
+  margin: 0 auto;
+  max-width: 300px;
+}
+/* 
+form {
+  display: flex;
+  flex-direction: column;
+} */
+
+.result,
+.setting {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid rgb(212, 212, 212);
+}
+
+button {
+  border-style: none;
+  border: 1px solid rgb(160, 169, 212);
+  background-color: rgb(93, 190, 255);
+  padding: 12px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+button:active {
+  background: rgb(35, 167, 255);
+}
+
+.subheader {
+  font-size: 1.4rem;
+  margin: 20px 0;
+}
+
+.setting {
+  margin: 40px 0;
+}
+
+.checkbox {
+  /* display: inline-block; */
+  margin-right: 10px;
+}
