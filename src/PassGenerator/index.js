@@ -7,39 +7,74 @@ export default class passGenerator extends Component {
     this.state = {
       result: "",
       lengthInput: 12,
+      mixed: true,
+      special: false,
     };
-
-    const stringCharAllowed =
-      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    this.stringCharAllowed = stringCharAllowed;
 
     this.HandleSubmit = this.HandleSubmit.bind(this);
     this.HandleCharLength = this.HandleCharLength.bind(this);
+    this.HandleCheckboxes = this.HandleCheckboxes.bind(this);
   }
 
   HandleSubmit(e) {
     e.preventDefault();
 
     const randomPassword = [];
-    for (let i = 0; i < this.state.lengthInput; i++) {
-      const randomStringValue = this.stringCharAllowed.split("")[
-        Math.floor(Math.random() * this.stringCharAllowed.length)
-      ];
-      randomPassword.push(randomStringValue);
+
+    if (this.state.mixed && this.state.special) {
+      const stringCharAllowed =
+        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@%+/'!#$^?:,(){}[]~-_.";
+      for (let i = 0; i < this.state.lengthInput; i++) {
+        const randomStringValue = stringCharAllowed.split("")[
+          Math.floor(Math.random() * stringCharAllowed.length)
+        ];
+        randomPassword.push(randomStringValue);
+      }
+    } else if (this.state.mixed) {
+      const stringCharAllowed =
+        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      for (let i = 0; i < this.state.lengthInput; i++) {
+        const randomStringValue = stringCharAllowed.split("")[
+          Math.floor(Math.random() * stringCharAllowed.length)
+        ];
+        randomPassword.push(randomStringValue);
+      }
+    } else if (this.state.special) {
+      const stringCharAllowed =
+        "0123456789abcdefghijklmnopqrstuvwxyz@%+/'!#$^?:,(){}[]~-_.";
+      for (let i = 0; i < this.state.lengthInput; i++) {
+        const randomStringValue = stringCharAllowed.split("")[
+          Math.floor(Math.random() * stringCharAllowed.length)
+        ];
+        randomPassword.push(randomStringValue);
+      }
+    } else {
+      const stringCharAllowed = "0123456789abcdefghijklmnopqrstuvwxyz";
+      for (let i = 0; i < this.state.lengthInput; i++) {
+        const randomStringValue = stringCharAllowed.split("")[
+          Math.floor(Math.random() * stringCharAllowed.length)
+        ];
+        randomPassword.push(randomStringValue);
+      }
     }
 
     this.setState({
       result: randomPassword.join(""),
     });
-
-    console.log(randomPassword.join(""));
-    console.log(this.state.lengthInput);
   }
 
   HandleCharLength(e) {
     this.setState({
       lengthInput: e.target.value,
     });
+  }
+
+  HandleCheckboxes(e) {
+    this.setState({
+      [e.target.name]: !this.state[e.target.name],
+    });
+
+    console.log(this.state[e.target.name]);
   }
 
   render() {
@@ -64,21 +99,24 @@ export default class passGenerator extends Component {
             />
             <label htmlFor="mixed-case">
               <input
+                onChange={this.HandleCheckboxes}
                 type="checkbox"
-                name="checkbox"
+                name="mixed"
                 id="mixed-case"
-                className="checkbox"
-                defaultChecked={true}
+                className="mixed"
+                defaultChecked={this.state.mixed}
                 // checked
               />
               Use mixed case
             </label>
             <label htmlFor="special-char">
               <input
+                onChange={this.HandleCheckboxes}
                 type="checkbox"
-                name="checkbox"
+                name="special"
                 id="special-char"
                 className="checkbox"
+                defaultChecked={this.state.special}
               />
               Use special characters
             </label>
