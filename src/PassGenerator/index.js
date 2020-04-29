@@ -19,44 +19,65 @@ export default class passGenerator extends Component {
   HandleSubmit(e) {
     e.preventDefault();
 
+    const defaultNumAllowed = "0123456789";
+    const defaultCharAllowed = "abcdefghijklmnopqrstuvwxyz";
+    const defaultSpecChar = "@%+/'!#$^?:,(){}[]~-_.";
+
     const randomPassword = [];
 
-    if (this.state.mixed && this.state.special) {
-      const stringCharAllowed =
-        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@%+/'!#$^?:,(){}[]~-_.";
+    const randomStrGenerator = (str) => {
       for (let i = 0; i < this.state.lengthInput; i++) {
-        const randomStringValue = stringCharAllowed.split("")[
-          Math.floor(Math.random() * stringCharAllowed.length)
+        const randomStringValue = str.split("")[
+          Math.floor(Math.random() * str.length)
         ];
         randomPassword.push(randomStringValue);
       }
-    } else if (this.state.mixed) {
-      const stringCharAllowed =
-        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      for (let i = 0; i < this.state.lengthInput; i++) {
-        const randomStringValue = stringCharAllowed.split("")[
-          Math.floor(Math.random() * stringCharAllowed.length)
-        ];
-        randomPassword.push(randomStringValue);
-      }
-    } else if (this.state.special) {
-      const stringCharAllowed =
-        "0123456789abcdefghijklmnopqrstuvwxyz@%+/'!#$^?:,(){}[]~-_.";
-      for (let i = 0; i < this.state.lengthInput; i++) {
-        const randomStringValue = stringCharAllowed.split("")[
-          Math.floor(Math.random() * stringCharAllowed.length)
-        ];
-        randomPassword.push(randomStringValue);
-      }
-    } else {
-      const stringCharAllowed = "0123456789abcdefghijklmnopqrstuvwxyz";
-      for (let i = 0; i < this.state.lengthInput; i++) {
-        const randomStringValue = stringCharAllowed.split("")[
-          Math.floor(Math.random() * stringCharAllowed.length)
-        ];
-        randomPassword.push(randomStringValue);
-      }
-    }
+    };
+
+    const stringCharAllowed = `${defaultNumAllowed}${defaultCharAllowed}${
+      this.state.mixed ? defaultCharAllowed.toUpperCase() : ""
+    }${this.state.special ? defaultSpecChar : ""}`;
+
+    randomStrGenerator(stringCharAllowed);
+
+    // ---------------------------------------------------
+
+    // if (this.state.mixed && this.state.special) {
+    //   const stringCharAllowed =
+    //     "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@%+/'!#$^?:,(){}[]~-_.";
+    //   for (let i = 0; i < this.state.lengthInput; i++) {
+    //     const randomStringValue = stringCharAllowed.split("")[
+    //       Math.floor(Math.random() * stringCharAllowed.length)
+    //     ];
+    //     randomPassword.push(randomStringValue);
+    //   }
+    // } else if (this.state.mixed) {
+    //   const stringCharAllowed =
+    //     "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    //   for (let i = 0; i < this.state.lengthInput; i++) {
+    //     const randomStringValue = stringCharAllowed.split("")[
+    //       Math.floor(Math.random() * stringCharAllowed.length)
+    //     ];
+    //     randomPassword.push(randomStringValue);
+    //   }
+    // } else if (this.state.special) {
+    //   const stringCharAllowed =
+    //     "0123456789abcdefghijklmnopqrstuvwxyz@%+/'!#$^?:,(){}[]~-_.";
+    //   for (let i = 0; i < this.state.lengthInput; i++) {
+    //     const randomStringValue = stringCharAllowed.split("")[
+    //       Math.floor(Math.random() * stringCharAllowed.length)
+    //     ];
+    //     randomPassword.push(randomStringValue);
+    //   }
+    // } else {
+    //   const stringCharAllowed = "0123456789abcdefghijklmnopqrstuvwxyz";
+    //   for (let i = 0; i < this.state.lengthInput; i++) {
+    //     const randomStringValue = stringCharAllowed.split("")[
+    //       Math.floor(Math.random() * stringCharAllowed.length)
+    //     ];
+    //     randomPassword.push(randomStringValue);
+    //   }
+    // }
 
     this.setState({
       result: randomPassword.join(""),
@@ -104,8 +125,8 @@ export default class passGenerator extends Component {
                 name="mixed"
                 id="mixed-case"
                 className="mixed"
-                defaultChecked={this.state.mixed}
-                // checked
+                checked={this.state.mixed}
+                // defaultChecked
               />
               Use mixed case
             </label>
@@ -116,7 +137,7 @@ export default class passGenerator extends Component {
                 name="special"
                 id="special-char"
                 className="checkbox"
-                defaultChecked={this.state.special}
+                checked={this.state.special}
               />
               Use special characters
             </label>
